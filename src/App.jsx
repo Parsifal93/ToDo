@@ -16,22 +16,32 @@ export default function App() {
       setTodos([...todos, newItem]);
     }
   };
-  const removeTask = () => {};
 
-  const handleToggle = () => {};
+  const removeTask = (id) => {
+    setTodos([...todos.filter((todo) => todo.id !== id)]);
+  };
+
+  const handleToggle = (id) => {
+    setTodos([
+      ...todos.map((todo) =>
+        todo.id === id ? { ...todo, complete: !todo.complete } : { ...todo }
+      )
+    ]);
+  };
+
   return (
     <div className="App">
       <header>
-        <h1>Task list:{todos.length}</h1>
+        <h1>Task List: {todos.length}</h1>
       </header>
       <ToDoForm addTask={addTask} />
       {todos.map((todo) => {
         return (
           <ToDo
             todo={todo}
+            key={todo.id}
             toggleTask={handleToggle}
             removeTask={removeTask}
-            key={todo.id}
           />
         );
       })}
